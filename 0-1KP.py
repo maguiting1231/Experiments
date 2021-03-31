@@ -77,5 +77,3 @@ Ratio_1.sort(reverse=True)
 print('排序结果为：',Ratio_1)
 
 
-
-

@@ -53,7 +53,6 @@ for line in file:
 
 #画散点图
 
-
 del W[-1]
 del V[-1]
 x = list(map(int, W))
@@ -61,6 +60,7 @@ y = list(map(int, V))
 plt.scatter(x, y)
 plt.show()
 #print(x)
+
 
 #项集第三项的价值:重量比的非递增排序
 

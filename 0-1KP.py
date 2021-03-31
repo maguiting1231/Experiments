@@ -1,4 +1,5 @@
 import numpy as np
+import sys
 import os
 import math
 import random
@@ -50,8 +51,12 @@ for line in file:
         V = line.strip().split(',')
     if (num == user * 8 + 8):
         W = line.strip().split(',')
+print('价值：', V)
+print('重量：', W)
+
 
 #画散点图
+
 
 del W[-1]
 del V[-1]
@@ -74,6 +79,51 @@ for i in range(2, len(Ratio), 3):
     ratio_1 = Ratio[i]
     Ratio_1.append(ratio_1)
 Ratio_1.sort(reverse=True)
-print('排序结果为：',Ratio_1)
+print('排序结果为：', Ratio_1)
 
 
+
+#用户能够自主选择动态规划算法、回溯算法求解指定D{0-1} KP数据的最优解和求解时间（以秒为单位）
+
+
+best = []
+m = cubage    #m为背包最大容量
+bag = []
+
+start =time.time()
+for i in range(len(x)):    # bag表示物品的重量与其所对应的质量
+    bag.append([])
+    for j in range(2):
+        weight = x[i]
+        value = y[i]
+        if j == 0:
+            bag[i].append(weight)
+        if j == 1:
+            bag[i].append(value)
+#print(bag)
+for i in range(len(bag)):
+    best.append([0]*(m+1))
+for i in range(m+1):
+    if i >= bag[0][1]:
+        best[0][i] = bag[0][0]    #第一次遍历数组将得到第一个物品所对应的最大质量得出
+
+for i in range(1, len(bag)):
+    for j in range(m+1):
+        if bag[i][1] <= j:
+            best[i][j] = max(best[i-1][j], best[i-1][j-bag[i][1]]+bag[i][0])    # 取best[i][j]当前的最大质量
+end = time.time()
+
+print('最优解为：', best[-1][-1])  # 打印best最终j=m(背包最大容量)的最大质量
+print('运行时间为: %s 秒'%(end-start))    #其中end-start就是程序运行的时间，单位是秒。
+
+
+#结果保存为txt文件
+
+Best = best[-1][-1]
+f = open("best_result.txt", 'w')
+f.write('最优解为：')
+f.write(str(Best))
+f.write('\n')
+f.write('运行时间为：')
+f.write(str(end-start))
+f.close()
